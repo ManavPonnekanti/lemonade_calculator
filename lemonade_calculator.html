@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <title>Lemonaid</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Lemonaid</h1>
+  <p class="tagline">Finally, a sane lemonade ratio calculator</p>
+
+  <label>
+    Lemon juice mass (g):
+    <input type="number" id="juice" min="0" step="any" />
+  </label>
+
+  <p>Water: <output id="water">0</output> g</p>
+
+  <p>Sweetener options:</p>
+  <ul>
+    <li>Demerara sugar: <output id="demerara">0</output> g</li>
+    <li>White sugar: <output id="white">0</output> g</li>
+    <li>Agave syrup: <output id="agave">0</output> g</li>
+  </ul>
+
+  <script>
+    const juiceInput   = document.getElementById('juice');
+    const waterOut     = document.getElementById('water');
+    const demeraraOut  = document.getElementById('demerara');
+    const whiteOut     = document.getElementById('white');   // new
+    const agaveOut     = document.getElementById('agave');   // new
+
+    // multipliers: mass of ingredient = m (juice mass) × factor
+    const factors = {
+      water:     4.85,  // density-adjusted 5:1 volume ratio
+      demerara:  0.80,  // 0.82 g ml⁻¹ / 1.03 g ml⁻¹
+      white:     0.83,  // 0.85 g ml⁻¹ / 1.03 g ml⁻¹
+      agave:     0.64   // 1.37 g ml⁻¹ / 1.03 g ml⁻¹ + adjusted for sweetness
+    };
+
+    function update () {
+      const m = parseFloat(juiceInput.value) || 0;
+      waterOut.textContent    = Math.round(m * factors.water);
+      demeraraOut.textContent = Math.round(m * factors.demerara);
+      whiteOut.textContent    = Math.round(m * factors.white);
+      agaveOut.textContent    = Math.round(m * factors.agave);
+    }
+
+    juiceInput.addEventListener('input', update);
+  </script>
+  
+  <p>Finish with a small pinch of salt and some fresh mint, if you have it!</p>
+
+  <footer>Made by <a href="https://ponnekanti.net">Manav</a>.</footer>
+</body>
+</html>
