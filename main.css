@@ -41,8 +41,7 @@ output {
 
 a {
     color: #B8860B;
-    text-decoration: none;
-    font-weight: bold;
+    text-decoration: underline;
 }
 
 footer {
